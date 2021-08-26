@@ -73,12 +73,12 @@ mousePositionObservable.subscribe( () => {} );
 
 8. A cada uno de los subscriptores, agrégueles un log para probar el paso de los datos.
 ```javascript
-mousePositionObservable.subscribe(() => {
+mousePositionObservable.subscribe((x, y) => {
   console.info('MouseCursorPosition', x, y);
 
 });
 
-mousePositionObservable.subscribe(() => {
+mousePositionObservable.subscribe((x, y) => {
   console.info('MouseCursorPosition', x, y);
 
 });
@@ -134,8 +134,11 @@ const unsubscribeMouse = mousePositionObservable.subscribe((x, y) => {
 
 16. Finalmente para usarlos haremos uso de los eventos click del contenedor y de la caja superior derecha.
 ```javascript
-document.querySelector('.container').addEventListener('click', unsubscribeMouse)
-document.querySelector('.mouse-position').addEventListener('click', unsubscribeBox)
+document.querySelector('.container').addEventListener('click', unsubscribeMouse);
+document.querySelector('.mouse-position').addEventListener('click', (e) => {
+  e.stopPropagation();
+  unsubscribeBox();
+});
 ```
 
 17. Observe el resultado.
